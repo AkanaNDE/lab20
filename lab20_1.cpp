@@ -20,20 +20,69 @@ string toUpperStr(string x){
     return y;
 }
 
-void importDataFromFile(){
+
+void importDataFromFile(string a, vector<string> &x,vector<int> &y,vector<char> &z){
+char format[] = "%[^:]:%d %d %d";
+string line;
+char name[100];
+char grade;
+int score,score1,score2,score3;
+ifstream file(a);
+while (getline (file,line)){
+const char *line2 = line.c_str();
+sscanf(line2,format,name,&score1,&score2,&score3);
+score = score1+score2+score3;
+grade = score2grade(score);
+x.push_back(name);
+y.push_back(score);
+z.push_back(grade);
 
 }
 
-void getCommand(){
+}
+
+void getCommand(string &command, string &key){
+cout << "Please input your command: ";
+cin >> command;
+if(toUpperStr (command) == "GRADE" || toUpperStr (command) == "NAME"){
+cin.ignore();
+getline(cin ,key);
+}
 
 }
 
-void searchName(){
-
+void searchName(const vector<string>& names, const vector<int>& scores, const vector<char>& grades, const string& key){
+bool found = false;
+    for(unsigned i = 0; i < names.size(); i++){
+        if(toUpperStr(names[i]) == toUpperStr(key)){
+            found = true;
+            cout << "---------------------------------\n";
+            cout << names[i] << "'s score = " << scores[i] << endl;
+            cout << names[i] << "'s grade = " << grades[i] << endl;
+            cout << "---------------------------------\n";
+        }
+    }
+    if(!found){
+        cout << "---------------------------------\n";
+        cout << "Cannot found.\n";
+        cout << "---------------------------------\n";
+    }
 }
 
-void searchGrade(){
+void searchGrade(const vector<string>& names, const vector<int>& scores, const vector<char>& grades, const string& key) {
+    bool found = false;
+    cout << "---------------------------------\n";
+    for (unsigned i = 0; i < names.size(); ++i) {
+        if (grades[i] == key[0]) {
+            found = true;
+            cout << names[i] << " (" << scores[i] << ")\n";
+        }
+    }
+    if (!found) {
+        cout << "Cannot found.\n";
 
+    }
+    cout << "---------------------------------\n";
 }
 
 
